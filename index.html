@@ -21,6 +21,7 @@
     <select id="idioma">
         <option value="es">Español</option>
         <option value="en">English</option>
+        <option value="it">Italiano</option>
     </select>
 
     <button onclick="saluda()">Saludar</button>
@@ -30,11 +31,17 @@
         function obtenerSaludoSegunHora(idioma) {
             const hora = new Date().getHours();
             if (hora >= 6 && hora < 12) {
-                return idioma === "es" ? "Buenos días" : "Good morning";
+                return idioma === "es" ? "Buenos días" :
+                       idioma === "en" ? "Good morning" :
+                       "Buongiorno";
             } else if (hora >= 12 && hora < 18) {
-                return idioma === "es" ? "Buenas tardes" : "Good afternoon";
+                return idioma === "es" ? "Buenas tardes" :
+                       idioma === "en" ? "Good afternoon" :
+                       "Buon pomeriggio";
             } else {
-                return idioma === "es" ? "Buenas noches" : "Good evening";
+                return idioma === "es" ? "Buenas noches" :
+                       idioma === "en" ? "Good evening" :
+                       "Buona notte";
             }
         }
 
@@ -45,11 +52,17 @@
                 } else {
                     return genero === "M" ? "Señor" : "Señora";
                 }
-            } else {
+            } else if (idioma === "en") {
                 if (edad < 18) {
                     return genero === "M" ? "Young man" : "Miss";
                 } else {
                     return genero === "M" ? "Mister" : "Madam";
+                }
+            } else { 
+                if (edad < 18) {
+                    return genero === "M" ? "Giovane" : "Signorina";
+                } else {
+                    return genero === "M" ? "Signore" : "Signora";
                 }
             }
         }
@@ -62,17 +75,23 @@
             const saludoDiv = document.getElementById("saludo");
 
             if (!nombre) {
-                saludoDiv.innerText = idioma === "es" ? "Por favor, ingresa tu nombre." : "Please enter your name.";
+                saludoDiv.innerText = idioma === "es" ? "Por favor, ingresa tu nombre." :
+                                      idioma === "en" ? "Please enter your name." :
+                                      "Per favore, inserisci il tuo nome.";
                 return;
             }
 
             if (!genero) {
-                saludoDiv.innerText = idioma === "es" ? "Por favor, selecciona tu género." : "Please select your gender.";
+                saludoDiv.innerText = idioma === "es" ? "Por favor, selecciona tu género." :
+                                      idioma === "en" ? "Please select your gender." :
+                                      "Per favore, seleziona il tuo genere.";
                 return;
             }
 
             if (isNaN(edad) || edad <= 0) {
-                saludoDiv.innerText = idioma === "es" ? "Por favor, ingresa una edad válida." : "Please enter a valid age.";
+                saludoDiv.innerText = idioma === "es" ? "Por favor, ingresa una edad válida." :
+                                      idioma === "en" ? "Please enter a valid age." :
+                                      "Per favore, inserisci un'età valida.";
                 return;
             }
 
