@@ -16,6 +16,8 @@
         <option value="F">Femenino</option>
     </select>
 
+    <input type="number" id="edad" placeholder="Ingresa tu edad">
+
     <button onclick="saluda()">Saludar</button>
     <div id="saludo"></div>
 
@@ -31,9 +33,18 @@
             }
         }
 
+        function obtenerTratamiento(genero, edad) {
+            if (edad < 18) {
+                return genero === "M" ? "Joven" : "Señorita";
+            } else {
+                return genero === "M" ? "Señor" : "Señora";
+            }
+        }
+
         function saluda() {
             const nombre = document.getElementById("nombre").value.trim();
             const genero = document.getElementById("genero").value;
+            const edad = parseInt(document.getElementById("edad").value);
             const saludoDiv = document.getElementById("saludo");
 
             if (!nombre) {
@@ -46,8 +57,13 @@
                 return;
             }
 
+            if (isNaN(edad) || edad <= 0) {
+                saludoDiv.innerText = "Por favor, ingresa una edad válida.";
+                return;
+            }
+
             const saludoHora = obtenerSaludoSegunHora();
-            const tratamiento = genero === "M" ? "Señor" : "Señora";
+            const tratamiento = obtenerTratamiento(genero, edad);
 
             saludoDiv.innerText = `${saludoHora}, ${tratamiento} ${nombre}!`;
         }
