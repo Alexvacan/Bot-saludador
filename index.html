@@ -18,26 +18,39 @@
 
     <input type="number" id="edad" placeholder="Ingresa tu edad">
 
+    <select id="idioma">
+        <option value="es">Español</option>
+        <option value="en">English</option>
+    </select>
+
     <button onclick="saluda()">Saludar</button>
     <div id="saludo"></div>
 
     <script>
-        function obtenerSaludoSegunHora() {
+        function obtenerSaludoSegunHora(idioma) {
             const hora = new Date().getHours();
             if (hora >= 6 && hora < 12) {
-                return "Buenos días";
+                return idioma === "es" ? "Buenos días" : "Good morning";
             } else if (hora >= 12 && hora < 18) {
-                return "Buenas tardes";
+                return idioma === "es" ? "Buenas tardes" : "Good afternoon";
             } else {
-                return "Buenas noches";
+                return idioma === "es" ? "Buenas noches" : "Good evening";
             }
         }
 
-        function obtenerTratamiento(genero, edad) {
-            if (edad < 18) {
-                return genero === "M" ? "Joven" : "Señorita";
+        function obtenerTratamiento(genero, edad, idioma) {
+            if (idioma === "es") {
+                if (edad < 18) {
+                    return genero === "M" ? "Joven" : "Señorita";
+                } else {
+                    return genero === "M" ? "Señor" : "Señora";
+                }
             } else {
-                return genero === "M" ? "Señor" : "Señora";
+                if (edad < 18) {
+                    return genero === "M" ? "Young man" : "Miss";
+                } else {
+                    return genero === "M" ? "Mister" : "Madam";
+                }
             }
         }
 
@@ -45,25 +58,26 @@
             const nombre = document.getElementById("nombre").value.trim();
             const genero = document.getElementById("genero").value;
             const edad = parseInt(document.getElementById("edad").value);
+            const idioma = document.getElementById("idioma").value;
             const saludoDiv = document.getElementById("saludo");
 
             if (!nombre) {
-                saludoDiv.innerText = "Por favor, ingresa tu nombre.";
+                saludoDiv.innerText = idioma === "es" ? "Por favor, ingresa tu nombre." : "Please enter your name.";
                 return;
             }
 
             if (!genero) {
-                saludoDiv.innerText = "Por favor, selecciona tu género.";
+                saludoDiv.innerText = idioma === "es" ? "Por favor, selecciona tu género." : "Please select your gender.";
                 return;
             }
 
             if (isNaN(edad) || edad <= 0) {
-                saludoDiv.innerText = "Por favor, ingresa una edad válida.";
+                saludoDiv.innerText = idioma === "es" ? "Por favor, ingresa una edad válida." : "Please enter a valid age.";
                 return;
             }
 
-            const saludoHora = obtenerSaludoSegunHora();
-            const tratamiento = obtenerTratamiento(genero, edad);
+            const saludoHora = obtenerSaludoSegunHora(idioma);
+            const tratamiento = obtenerTratamiento(genero, edad, idioma);
 
             saludoDiv.innerText = `${saludoHora}, ${tratamiento} ${nombre}!`;
         }
