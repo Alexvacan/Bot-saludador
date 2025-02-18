@@ -9,6 +9,13 @@
     <h1>Saludador</h1>
 
     <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+    
+    <select id="genero">
+        <option value="">Selecciona tu género</option>
+        <option value="M">Masculino</option>
+        <option value="F">Femenino</option>
+    </select>
+
     <button onclick="saluda()">Saludar</button>
     <div id="saludo"></div>
 
@@ -26,14 +33,23 @@
 
         function saluda() {
             const nombre = document.getElementById("nombre").value.trim();
+            const genero = document.getElementById("genero").value;
             const saludoDiv = document.getElementById("saludo");
 
-            if (nombre) {
-                const saludoHora = obtenerSaludoSegunHora();
-                saludoDiv.innerText = `${saludoHora}, ${nombre}!`;
-            } else {
+            if (!nombre) {
                 saludoDiv.innerText = "Por favor, ingresa tu nombre.";
+                return;
             }
+
+            if (!genero) {
+                saludoDiv.innerText = "Por favor, selecciona tu género.";
+                return;
+            }
+
+            const saludoHora = obtenerSaludoSegunHora();
+            const tratamiento = genero === "M" ? "Señor" : "Señora";
+
+            saludoDiv.innerText = `${saludoHora}, ${tratamiento} ${nombre}!`;
         }
     </script>
 </body>
